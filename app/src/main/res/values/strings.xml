@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Car Rental</string>
 
+    <string-array name="tab_name">
+        <item>Orders</item>
+        <item>Cars</item>
+        <item>Users</item>
+    </string-array>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_tab_fragment">TabFragment</string>
 </resources>
