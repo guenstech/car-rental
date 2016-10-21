@@ -29,10 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Fragments.TabFragment"
-            android:label="@string/title_activity_tab_fragment" >
-        </activity>
     </application>
 
 </manifest>
