@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.gunz.carrental.Activities.MainActivity;
 import com.gunz.carrental.Adapter.RecyclerAdapter;
 import com.gunz.carrental.R;
@@ -18,10 +19,11 @@ import com.gunz.carrental.Utils.DividerItemDecoration;
 
 public class TabFragment extends Fragment {
     public TabFragment(){}
+    private PullRefreshLayout pullRefreshLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -34,6 +36,16 @@ public class TabFragment extends Fragment {
         rv.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
+
+        pullRefreshLayout = (PullRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
+        pullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
+        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullRefreshLayout.setRefreshing(false); //cancel refresh when done or failed request
+            }
+        });
+
         return rootView;
     }
 }
