@@ -4,6 +4,7 @@
     <dimen name="parallax_image_height">200dp</dimen>
     <dimen name="actionbar_title_size">18sp</dimen>
     <dimen name="actionbar_subtitle_size">12sp</dimen>
+    <dimen name="tab_title">14sp</dimen>
     <dimen name="list_title">16sp</dimen>
     <dimen name="list_desc">12sp</dimen>
     <dimen name="list_price">16sp</dimen>
