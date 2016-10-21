@@ -1,25 +1,28 @@
 package com.gunz.carrental.Fragments;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.baoyz.widget.PullRefreshLayout;
-import com.gunz.carrental.Activities.MainActivity;
 import com.gunz.carrental.Adapter.RecyclerAdapter;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.DividerItemDecoration;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import cz.msebera.android.httpclient.Header;
 
 public class TabFragment extends Fragment {
     public TabFragment(){}
     private PullRefreshLayout pullRefreshLayout;
+    private AsyncHttpClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,20 @@ public class TabFragment extends Fragment {
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                pullRefreshLayout.setRefreshing(false); //cancel refresh when done or failed request
+                client = new AsyncHttpClient();
+                client.get("http://192.168.1.4/vappystore/get_categorys", null, new TextHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Log.e("","Failure: Ooops (" + statusCode + ") " + throwable.getMessage());
+                        pullRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        Log.e("","Success: " + responseString);
+                        pullRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 
