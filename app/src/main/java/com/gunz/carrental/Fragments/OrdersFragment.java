@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.baoyz.widget.PullRefreshLayout;
 import com.gunz.carrental.Adapter.OrderAdapter;
 import com.gunz.carrental.Api.URLConstant;
+import com.gunz.carrental.Moduls.Order;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.DividerItemDecoration;
 import com.loopj.android.http.AsyncHttpClient;
@@ -19,6 +20,11 @@ import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -32,7 +38,8 @@ public class OrdersFragment extends Fragment {
     private AsyncHttpClient client;
     private RecyclerView rv;
     private OrderAdapter adapter;
-    private JSONArray arrayData = new JSONArray();
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private List<Order> orders;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,6 @@ public class OrdersFragment extends Fragment {
         rv = (RecyclerView) rootView.findViewById(R.id.rv_recycler_view);
         rv.setHasFixedSize(true);
         rv.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-        adapter = new OrderAdapter(getActivity(), arrayData);
-        rv.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
 
@@ -59,7 +64,7 @@ public class OrdersFragment extends Fragment {
             }
         });
 
-        if (arrayData.length() == 0) {
+        if (rv.getChildCount() == 0) {
             pullRefreshLayout.setRefreshing(true);
             getOrder();
         }
@@ -78,10 +83,23 @@ public class OrdersFragment extends Fragment {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.e("", "Success: " + responseString);
                 try {
-                    arrayData = new JSONArray(responseString);
-                    adapter = new OrderAdapter(getActivity(), arrayData);
+                    JSONArray arrayData = new JSONArray(responseString);
+                    orders = new ArrayList<Order>();
+                    for (int i = 0; i < arrayData.length(); i++) {
+                        try {
+                            orders.add(new Order(
+                                    arrayData.getJSONObject(i).getJSONObject("user").getString("name"),
+                                    arrayData.getJSONObject(i).getJSONObject("car").getString("model"),
+                                    dateFormat.parse(arrayData.getJSONObject(i).getString("start_date")),
+                                    dateFormat.parse(arrayData.getJSONObject(i).getString("end_date"))
+                            ));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    adapter = new OrderAdapter(getActivity(), orders);
                     rv.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

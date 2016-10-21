@@ -6,19 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import com.gunz.carrental.Moduls.Order;
 import com.gunz.carrental.R;
-import com.gunz.carrental.Utils.DateChecker;
+import com.gunz.carrental.Utils.DateUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Gunz on 22/10/2016.
  */
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
     private Context context;
-    private JSONArray arrayData;
+    private List<Order> orders;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mTextTitle;
@@ -30,9 +30,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         }
     }
 
-    public OrderAdapter(Context context, JSONArray arrayData) {
+    public OrderAdapter(Context context, List<Order> orderList) {
         this.context = context;
-        this.arrayData = arrayData;
+        this.orders = orderList;
     }
 
     @Override
@@ -44,22 +44,19 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        try {
-            holder.mTextTitle.setText(arrayData.getJSONObject(position).getJSONObject("user").getString("name")
-                    + " | "
-                    + arrayData.getJSONObject(position).getJSONObject("car").getString("model")
-            );
-            DateChecker dateChecker = new DateChecker(context,
-                    arrayData.getJSONObject(position).getString("end_date")
-            );
-            holder.mTextStatus.setText(dateChecker.getStatus());
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String status;
+        holder.mTextTitle.setText(orders.get(position).title);
+        if (DateUtils.isBeforeDay(new Date(), orders.get(position).endDate)
+                || DateUtils.isToday(orders.get(position).endDate)) {
+            status = context.getResources().getString(R.string.status_active);
+        } else {
+            status = context.getResources().getString(R.string.status_finish);
         }
+        holder.mTextStatus.setText(status);
     }
 
     @Override
     public int getItemCount() {
-        return arrayData.length();
+        return orders.size();
     }
 }
