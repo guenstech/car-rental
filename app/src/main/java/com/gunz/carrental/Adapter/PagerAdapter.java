@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import com.gunz.carrental.Fragments.Orders;
+import com.gunz.carrental.Fragments.OrdersFragment;
 import com.gunz.carrental.R;
 
 /**
@@ -27,11 +27,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new Orders();
+                return new OrdersFragment();
             case 1:
-                return new Orders();
+                return new OrdersFragment();
             case 2:
-                return new Orders();
+                return new OrdersFragment();
         }
         return null;
     }

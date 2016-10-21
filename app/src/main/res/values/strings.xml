@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Car Rental</string>
+    <string name="status_active">active</string>
+    <string name="status_finish">finish</string>
 
     <string-array name="tab_name">
         <item>Orders</item>
