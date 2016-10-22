@@ -13,6 +13,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_add">Add</string>
+    <string name="action_order">Order</string>
+    <string name="action_update">Update</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_detail">Detail</string>
     <string name="add_new_car_title">Add New Car</string>
     <string name="add_new_car_brand">Car Brand</string>
     <string name="add_new_car_model">Car Model</string>

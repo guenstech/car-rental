@@ -32,6 +32,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     private Context context;
     private List<Order> orders;
 
+    public OrderAdapter(Context context, List<Order> orderList) {
+        this.context = context;
+        this.orders = orderList;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mTextTitle;
         public TextView mTextStatus;
@@ -42,11 +47,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             mTextStatus = (TextView)v.findViewById(R.id.lblStatus);
             mTextDetail = (TextView)v.findViewById(R.id.lblDetail);
         }
-    }
-
-    public OrderAdapter(Context context, List<Order> orderList) {
-        this.context = context;
-        this.orders = orderList;
     }
 
     @Override

@@ -39,7 +39,6 @@ import cz.msebera.android.httpclient.Header;
 public class OrdersFragment extends Fragment {
     public OrdersFragment(){}
     private View rootView;
-//    private PullRefreshLayout pullRefreshLayout;
     private MySwipeLayout mySwipeLayout;
     private AsyncHttpClient client;
     private RecyclerView rv;
@@ -73,20 +72,8 @@ public class OrdersFragment extends Fragment {
             }
         });
 
-//        pullRefreshLayout = (PullRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
-//        pullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
-//        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                getOrder();
-//            }
-//        });
-
-//        if (rv.getChildCount() == 0) {
-////            pullRefreshLayout.setRefreshing(true);
-            mySwipeLayout.setRefreshing(true);
-            getOrder();
-//        }
+        mySwipeLayout.setRefreshing(true);
+        getOrder();
 
         return rootView;
     }
@@ -96,7 +83,6 @@ public class OrdersFragment extends Fragment {
         client.get(URLConstant.get_order, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                pullRefreshLayout.setRefreshing(false);
                 mySwipeLayout.setRefreshing(false);
                 new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
                         .setTitleText(getActivity().getResources().getString(R.string.dialog_error_title))
@@ -108,7 +94,6 @@ public class OrdersFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
                     JSONArray arrayData = new JSONArray(responseString);
-//                    orders = new ArrayList<Order>();
                     orders.clear();
                     for (int i = 0; i < arrayData.length(); i++) {
                         try {
@@ -125,14 +110,10 @@ public class OrdersFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-
-//                    adapter = new OrderAdapter(getActivity(), orders);
-//                    rv.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                pullRefreshLayout.setRefreshing(false);
                 mySwipeLayout.setRefreshing(false);
             }
         });

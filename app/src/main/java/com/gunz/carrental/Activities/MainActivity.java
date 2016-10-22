@@ -85,22 +85,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_add:
-//                break;
-//            default:
-//                break;
-//        }
-//        return false;
-////        int id = item.getItemId();
-////        if (id == R.id.action_settings) {
-////            return true;
-////        }
-////        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     public void onStart() {
         super.onStart();

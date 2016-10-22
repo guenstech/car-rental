@@ -24,8 +24,10 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.gunz.carrental.Activities.MainActivity;
+import com.gunz.carrental.Adapter.CarAdapter;
 import com.gunz.carrental.Adapter.OrderAdapter;
 import com.gunz.carrental.Api.URLConstant;
+import com.gunz.carrental.Modules.Car;
 import com.gunz.carrental.Modules.Order;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.DividerItemDecoration;
@@ -52,9 +54,12 @@ public class CarsFragment extends Fragment {
     private MySwipeLayout mySwipeLayout;
     private AsyncHttpClient client;
     private RecyclerView rv;
-    private OrderAdapter adapter;
+//    private OrderAdapter adapter;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private List<Order> orders;
+//    private List<Order> orders;
+    private CarAdapter adapter;
+    private List<Car> cars;
+    private FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,25 +76,33 @@ public class CarsFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
 
-        orders = new ArrayList<Order>();
-        adapter = new OrderAdapter(getActivity(), orders);
+        cars = new ArrayList<Car>();
+        adapter = new CarAdapter(getActivity(), cars);
         rv.setAdapter(adapter);
 
-        final FloatingActionButton fab = ((MainActivity)getActivity()).getFab();
+        fab = ((MainActivity)getActivity()).getFab();
+        fab.setOnClickListener(new OnOneClickListener() {
+            @Override
+            public void onOneClick(View v) {
+                addCar();
+            }
+        });
 
         rv.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (!recyclerView.canScrollVertically(-1)) {
-                    fab.show(true);
-                } else if (!recyclerView.canScrollVertically(1)) {
-                    fab.hide(true);
-                } else if (dy < 0) {
-                    if (fab.isHidden()) {
+                if (isAdded() && isVisible() && getUserVisibleHint()) {
+                    if (!recyclerView.canScrollVertically(-1)) {
                         fab.show(true);
+                    } else if (!recyclerView.canScrollVertically(1)) {
+                        fab.hide(true);
+                    } else if (dy < 0) {
+                        if (fab.isHidden()) {
+                            fab.show(true);
+                        }
+                    } else if (dy > 0) {
+                        //onScrolledDown();
                     }
-                } else if (dy > 0) {
-                    //onScrolledDown();
                 }
             }
         });
@@ -98,16 +111,19 @@ public class CarsFragment extends Fragment {
         mySwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getOrder();
+                getCarList();
             }
         });
+
+        mySwipeLayout.setRefreshing(true);
+        getCarList();
 
         return rootView;
     }
 
-    private void getOrder() {
+    private void getCarList() {
         client = new AsyncHttpClient();
-        client.get(URLConstant.get_order, null, new TextHttpResponseHandler() {
+        client.get(URLConstant.get_car_list, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 mySwipeLayout.setRefreshing(false);
@@ -121,20 +137,23 @@ public class CarsFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
                     JSONArray arrayData = new JSONArray(responseString);
+                    cars.clear();
                     for (int i = 0; i < arrayData.length(); i++) {
-                        try {
-                            orders.add(new Order(
-                                    arrayData.getJSONObject(i).getInt("id"),
-                                    arrayData.getJSONObject(i).getInt("user_id"),
-                                    arrayData.getJSONObject(i).getInt("car_id"),
-                                    arrayData.getJSONObject(i).getJSONObject("user").getString("name"),
-                                    arrayData.getJSONObject(i).getJSONObject("car").getString("model"),
-                                    dateFormat.parse(arrayData.getJSONObject(i).getString("start_date")),
-                                    dateFormat.parse(arrayData.getJSONObject(i).getString("end_date"))
-                            ));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                        String imgUrl = "";
+                        if (!arrayData.getJSONObject(i).isNull("image_url")) {
+                            imgUrl = arrayData.getJSONObject(i).getString("image_url");
                         }
+                        cars.add(new Car(
+                                arrayData.getJSONObject(i).getInt("id"),
+                                arrayData.getJSONObject(i).getString("brand"),
+                                arrayData.getJSONObject(i).getString("model"),
+                                arrayData.getJSONObject(i).getString("license_plat"),
+                                0,
+                                "",
+                                arrayData.getJSONObject(i).getDouble("fare"),
+                                "available",
+                                imgUrl
+                        ));
                     }
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
