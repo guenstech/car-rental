@@ -1,19 +1,25 @@
 package com.gunz.carrental.Activities;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.gunz.carrental.Api.URLConstant;
 import com.gunz.carrental.Modules.Order;
 import com.gunz.carrental.R;
+import com.gunz.carrental.Utils.CurrencyFormatter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +39,11 @@ public class OrderCarDetail extends AppCompatActivity {
     private Bundle bundle;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
     private SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+    private CardView cardView;
     private TextView lblTitle, lblPrice, lblStatus;
+    private MaterialEditText txName, txStartDate, txEndDate;
+    private Button btnClose;
+    private String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +52,26 @@ public class OrderCarDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        cardView = (CardView)findViewById(R.id.cardView);
+        cardView.setCardBackgroundColor(Color.WHITE);
         lblTitle = (TextView)findViewById(R.id.lblTitle);
         lblPrice = (TextView)findViewById(R.id.lblPrice);
         lblStatus = (TextView)findViewById(R.id.lblStatus);
+        txName = (MaterialEditText)findViewById(R.id.txName);
+        txStartDate = (MaterialEditText)findViewById(R.id.txStartDate);
+        txEndDate = (MaterialEditText)findViewById(R.id.txEndDate);
+        btnClose = (Button)findViewById(R.id.btnClose);
 
         bundle = getIntent().getExtras();
         try {
             JSONObject jsonObject = new JSONObject(bundle.getString("DATA"));
             try {
-                Date date = dateFormat.parse(jsonObject.getString("start_date"));
-                Log.e("","sDate: " + dateFormat2.format(date));
+                status = jsonObject.getString("status");
+                txName.setText(jsonObject.getString("user"));
+                Date startDate = dateFormat.parse(jsonObject.getString("start_date"));
+                Date endDate = dateFormat.parse(jsonObject.getString("end_date"));
+                txStartDate.setText(dateFormat2.format(startDate));
+                txEndDate.setText(dateFormat2.format(endDate));
                 getCarDetail(jsonObject.getString("car_id"));
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -59,6 +79,13 @@ public class OrderCarDetail extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getCarDetail(String car_id) {
@@ -76,11 +103,12 @@ public class OrderCarDetail extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
                     JSONObject jsonObject = new JSONObject(responseString);
-                    Log.e("",""+jsonObject.toString());
                     lblTitle.setText(
                             jsonObject.getString("license_plat") + " | " + jsonObject.getString("model")
                     );
-                    lblPrice.setText(jsonObject.getString("fare"));
+                    CurrencyFormatter currencyFormatter = new CurrencyFormatter(jsonObject.getDouble("fare"));
+                    lblPrice.setText(currencyFormatter.format());
+                    lblStatus.setText(status);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

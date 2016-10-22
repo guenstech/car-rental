@@ -43,6 +43,7 @@
 
     <style name="Theme.AppCompat.Translucent" parent="@style/Theme.AppCompat.Light">
         <item name="android:textAllCaps">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>

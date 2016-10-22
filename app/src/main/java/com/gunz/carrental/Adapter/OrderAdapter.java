@@ -58,7 +58,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String status;
+        final String status;
         holder.mTextTitle.setText(orders.get(position).title);
         if (DateUtils.isBeforeDay(new Date(), orders.get(position).endDate)
                 || DateUtils.isToday(orders.get(position).endDate)) {
@@ -88,6 +88,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                             jsonObject.put("car", orders.get(position).car);
                             jsonObject.put("start_date", orders.get(position).startDate);
                             jsonObject.put("end_date", orders.get(position).endDate);
+                            jsonObject.put("status", status);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -110,12 +111,5 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public int getItemCount() {
         return orders.size();
     }
-
-//    private void showDetail() {
-//        final Dialog dialog = new Dialog(context);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.custom_dialog);
-//        TextView lblTitle = (TextView)dialog.findViewById(R.id.lblTitle);
-//        dialog.show();
-//    }
+    
 }

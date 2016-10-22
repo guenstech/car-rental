@@ -6,19 +6,32 @@
     android:orientation="vertical"
     tools:context="com.gunz.carrental.Activities.OrderCarDetail">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:inputType="date"-->
+        <!--android:imeOptions="actionDone"-->
+        <!--/>-->
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/main_color"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:titleTextAppearance="@style/MyApp.ActionBar.TitleTextStyle"
-        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
-        app:theme="@style/AppTheme.Toolbar"
-        app:elevation="0dp"
-        app:layout_scrollFlags="scroll|enterAlways"
-        />
+        android:layout_height="wrap_content"
+        app:elevation="6dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/main_color"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:titleTextAppearance="@style/MyApp.ActionBar.TitleTextStyle"
+            app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
+            app:theme="@style/AppTheme.Toolbar"
+            />
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,8 +41,10 @@
         >
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             >
 
             <LinearLayout
@@ -77,12 +92,89 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/gray_menu_text"
                     android:textSize="@dimen/list_status"
-                    android:text="Status"
                     />
 
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Name"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:textSize="@dimen/list_title"
+            android:enabled="false"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Start Date"
+            android:imeOptions="actionNext"
+            android:inputType="date"
+            android:textSize="@dimen/list_title"
+            android:enabled="false"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="End Date"
+            android:imeOptions="actionDone"
+            android:inputType="date"
+            android:textSize="@dimen/list_title"
+            android:enabled="false"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <Button
+                android:id="@+id/btnClose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/list_title"
+                android:textAllCaps="true"
+                android:text="@string/btn_close"
+                />
+
+        </FrameLayout>
 
     </LinearLayout>
 
