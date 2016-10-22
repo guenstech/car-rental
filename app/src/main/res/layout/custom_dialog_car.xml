@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/frameDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@android:color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/lblTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textSize="@dimen/dialog_title_20"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="@string/add_new_car_title"
+                />
+
+            <ImageView
+                android:id="@+id/imgClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close"
+                />
+
+        </LinearLayout>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/add_new_car_brand"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:textSize="@dimen/list_title"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/add_new_car_model"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:textSize="@dimen/list_title"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txLicense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/add_new_car_license"
+            android:imeOptions="actionNext"
+            android:inputType="textCapCharacters"
+            android:textSize="@dimen/list_title"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txFare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/add_new_car_fare"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:textSize="@dimen/list_title"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frameDialog"
+        android:background="@color/gray_btn_bg_color"
+        >
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/list_title"
+            android:textAllCaps="true"
+            android:text="@string/btn_save"
+            />
+
+    </FrameLayout>
+
+</RelativeLayout>

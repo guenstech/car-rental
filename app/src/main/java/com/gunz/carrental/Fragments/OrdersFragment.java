@@ -1,19 +1,24 @@
 package com.gunz.carrental.Fragments;
 
+import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baoyz.widget.PullRefreshLayout;
+import com.github.clans.fab.FloatingActionButton;
+import com.gunz.carrental.Activities.MainActivity;
 import com.gunz.carrental.Adapter.OrderAdapter;
 import com.gunz.carrental.Api.URLConstant;
 import com.gunz.carrental.Modules.Order;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.DividerItemDecoration;
+import com.gunz.carrental.Utils.MySwipeLayout;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -34,7 +39,8 @@ import cz.msebera.android.httpclient.Header;
 public class OrdersFragment extends Fragment {
     public OrdersFragment(){}
     private View rootView;
-    private PullRefreshLayout pullRefreshLayout;
+//    private PullRefreshLayout pullRefreshLayout;
+    private MySwipeLayout mySwipeLayout;
     private AsyncHttpClient client;
     private RecyclerView rv;
     private OrderAdapter adapter;
@@ -55,19 +61,32 @@ public class OrdersFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
 
-        pullRefreshLayout = (PullRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
-        pullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
-        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+        orders = new ArrayList<Order>();
+        adapter = new OrderAdapter(getActivity(), orders);
+        rv.setAdapter(adapter);
+
+        mySwipeLayout = (MySwipeLayout)rootView.findViewById(R.id.swipeRefreshLayout);
+        mySwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getOrder();
             }
         });
 
-        if (rv.getChildCount() == 0) {
-            pullRefreshLayout.setRefreshing(true);
+//        pullRefreshLayout = (PullRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
+//        pullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
+//        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                getOrder();
+//            }
+//        });
+
+//        if (rv.getChildCount() == 0) {
+////            pullRefreshLayout.setRefreshing(true);
+            mySwipeLayout.setRefreshing(true);
             getOrder();
-        }
+//        }
 
         return rootView;
     }
@@ -77,7 +96,8 @@ public class OrdersFragment extends Fragment {
         client.get(URLConstant.get_order, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                pullRefreshLayout.setRefreshing(false);
+//                pullRefreshLayout.setRefreshing(false);
+                mySwipeLayout.setRefreshing(false);
                 new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
                         .setTitleText(getActivity().getResources().getString(R.string.dialog_error_title))
                         .setContentText("(" + statusCode + ") " + throwable.getMessage())
@@ -88,7 +108,8 @@ public class OrdersFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
                     JSONArray arrayData = new JSONArray(responseString);
-                    orders = new ArrayList<Order>();
+//                    orders = new ArrayList<Order>();
+                    orders.clear();
                     for (int i = 0; i < arrayData.length(); i++) {
                         try {
                             orders.add(new Order(
@@ -105,13 +126,55 @@ public class OrdersFragment extends Fragment {
                         }
                     }
 
-                    adapter = new OrderAdapter(getActivity(), orders);
-                    rv.setAdapter(adapter);
+//                    adapter = new OrderAdapter(getActivity(), orders);
+//                    rv.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                pullRefreshLayout.setRefreshing(false);
+//                pullRefreshLayout.setRefreshing(false);
+                mySwipeLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }
