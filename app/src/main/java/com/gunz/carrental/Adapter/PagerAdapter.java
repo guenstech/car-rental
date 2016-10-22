@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.gunz.carrental.Fragments.CarsFragment;
 import com.gunz.carrental.Fragments.OrdersFragment;
 import com.gunz.carrental.R;
 
@@ -30,9 +32,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new OrdersFragment();
             case 1:
-                return new OrdersFragment();
+                return new CarsFragment();
             case 2:
-                return new OrdersFragment();
+                return new CarsFragment();
         }
         return null;
     }
