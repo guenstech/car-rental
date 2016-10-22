@@ -1,6 +1,7 @@
 package com.gunz.carrental.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +10,18 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+
+import com.gunz.carrental.Activities.OrderCar;
+import com.gunz.carrental.Activities.OrderCarDetail;
 import com.gunz.carrental.Modules.Order;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.DateUtils;
 import com.gunz.carrental.Utils.OnOneClickListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,8 +70,37 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.mTextDetail.setOnClickListener(new OnOneClickListener() {
             @Override
             public void onOneClick(View v) {
-                Log.e("",""+orders.get(position).user);
                 Animation animation = AnimationUtils.loadAnimation(context, R.anim.bounce);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("order_id", orders.get(position).orderId);
+                            jsonObject.put("user_id", orders.get(position).userId);
+                            jsonObject.put("car_id", orders.get(position).carId);
+                            jsonObject.put("user", orders.get(position).user);
+                            jsonObject.put("car", orders.get(position).car);
+                            jsonObject.put("start_date", orders.get(position).startDate);
+                            jsonObject.put("end_date", orders.get(position).endDate);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Intent intent = new Intent(context, OrderCarDetail.class);
+                        intent.putExtra("DATA", jsonObject.toString());
+                        context.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
                 v.startAnimation(animation);
             }
         });

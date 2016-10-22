@@ -92,6 +92,9 @@ public class OrdersFragment extends Fragment {
                     for (int i = 0; i < arrayData.length(); i++) {
                         try {
                             orders.add(new Order(
+                                    arrayData.getJSONObject(i).getInt("id"),
+                                    arrayData.getJSONObject(i).getInt("user_id"),
+                                    arrayData.getJSONObject(i).getInt("car_id"),
                                     arrayData.getJSONObject(i).getJSONObject("user").getString("name"),
                                     arrayData.getJSONObject(i).getJSONObject("car").getString("model"),
                                     dateFormat.parse(arrayData.getJSONObject(i).getString("start_date")),

@@ -29,6 +29,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Activities.OrderCar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_order_car"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".Activities.OrderCarDetail"
+            android:label="@string/title_activity_order_car_detail"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
     </application>
 
 </manifest>
