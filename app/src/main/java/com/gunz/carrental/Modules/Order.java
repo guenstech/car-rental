@@ -1,4 +1,4 @@
-package com.gunz.carrental.Moduls;
+package com.gunz.carrental.Modules;
 
 import java.util.Date;
 

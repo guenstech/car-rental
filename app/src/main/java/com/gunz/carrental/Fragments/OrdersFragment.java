@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 import com.baoyz.widget.PullRefreshLayout;
 import com.gunz.carrental.Adapter.OrderAdapter;
 import com.gunz.carrental.Api.URLConstant;
-import com.gunz.carrental.Moduls.Order;
+import com.gunz.carrental.Modules.Order;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.DividerItemDecoration;
 import com.loopj.android.http.AsyncHttpClient;
@@ -26,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -77,8 +77,11 @@ public class OrdersFragment extends Fragment {
         client.get(URLConstant.get_order, null, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e("", "Failure: Ooops (" + statusCode + ") " + throwable.getMessage());
                 pullRefreshLayout.setRefreshing(false);
+                new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText(getActivity().getResources().getString(R.string.dialog_error_title))
+                        .setContentText("(" + statusCode + ") " + throwable.getMessage())
+                        .show();
             }
 
             @Override

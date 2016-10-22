@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import com.gunz.carrental.R;
 /**
  * Created by Gunz on 21/10/2016.
  */
-public class PagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
     Context context;
     String tabTitles[];
 
@@ -46,10 +47,10 @@ public class PagerAdapter extends FragmentPagerAdapter {
         return tabTitles[position];
     }
 
-    public View getTabView(int position) {
-        View tab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null);
-        TextView tv = (TextView) tab.findViewById(R.id.custom_text);
-        tv.setText(tabTitles[position]);
-        return tab;
-    }
+//    public View getTabView(int position) {
+//        View tab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null);
+//        TextView tv = (TextView) tab.findViewById(R.id.custom_text);
+//        tv.setText(tabTitles[position]);
+//        return tab;
+//    }
 }

@@ -3,6 +3,7 @@
     <string name="status_active">active</string>
     <string name="status_finish">finish</string>
     <string name="order_detail">detail</string>
+    <string name="dialog_error_title">Oops...</string>
 
     <string-array name="tab_name">
         <item>Orders</item>
