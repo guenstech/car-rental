@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gunz.carrental.Activities.MainActivity;
 import com.gunz.carrental.Modules.Car;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.CircularImageView;
+import com.gunz.carrental.Utils.CurrencyFormatter;
 
 import java.util.List;
 
@@ -55,10 +57,15 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.mTextTitle.setText(cars.get(position).title);
+//        MainActivity.imageLoader.displayImage(cars.get(position).thumb, holder.mImgThumb, MainActivity.imageOption);
+        CurrencyFormatter currencyFormatter = new CurrencyFormatter(cars.get(position).farePerDay);
+        holder.mTextFare.setText(currencyFormatter.format());
+        holder.mTextStatus.setText(cars.get(position).status);
         holder.mImgMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("","Menu pos (" + position + ") clicked!");
+                Log.e("","Car ID: " + cars.get(position).id);
                 final PopupMenu popup = new PopupMenu(context, v);
                 popup.getMenuInflater().inflate(R.menu.menu_popup_car, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

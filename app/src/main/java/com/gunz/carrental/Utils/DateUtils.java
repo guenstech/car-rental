@@ -253,4 +253,30 @@ public class DateUtils {
 
     /** The maximum date possible. */
     public static Date MAX_DATE = new Date(Long.MAX_VALUE);
+
+    public static int howManyDays(Date start_date, Date end_date) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(start_date);
+        int start_year = cal1.get(Calendar.YEAR);
+        int start_month = cal1.get(Calendar.MONTH);
+        int start_day = cal1.get(Calendar.DAY_OF_MONTH);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(end_date);
+        int end_year = cal2.get(Calendar.YEAR);
+        int end_month = cal2.get(Calendar.MONTH);
+        int end_day = cal2.get(Calendar.DAY_OF_MONTH);
+
+        Calendar dateStart = Calendar.getInstance();
+        Calendar dateEnd = Calendar.getInstance();
+
+        dateStart.set(start_year, start_month, start_day);
+        dateEnd.set(end_year, end_month, end_day);
+
+        long diff = dateEnd.getTimeInMillis() - dateStart.getTimeInMillis();
+
+        float dayCount = (float) diff / (24 * 60 * 60 * 1000);
+
+        return (int) dayCount;
+    }
 }

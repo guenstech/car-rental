@@ -13,9 +13,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gunz.carrental.Api.URLConstant;
+import com.gunz.carrental.Database.CarDBHelper;
+import com.gunz.carrental.Database.CarRepo;
 import com.gunz.carrental.Modules.Order;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.CurrencyFormatter;
+import com.gunz.carrental.Utils.DateUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -43,7 +46,6 @@ public class OrderCarDetail extends AppCompatActivity {
     private TextView lblTitle, lblPrice, lblStatus;
     private MaterialEditText txName, txStartDate, txEndDate;
     private Button btnClose;
-    private String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +68,19 @@ public class OrderCarDetail extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(bundle.getString("DATA"));
             try {
-                status = jsonObject.getString("status");
+                CarRepo repo = new CarRepo(this);
+                CarDBHelper carDetail = repo.getCarDetail(jsonObject.getInt("car_id"));
                 txName.setText(jsonObject.getString("user"));
                 Date startDate = dateFormat.parse(jsonObject.getString("start_date"));
                 Date endDate = dateFormat.parse(jsonObject.getString("end_date"));
                 txStartDate.setText(dateFormat2.format(startDate));
                 txEndDate.setText(dateFormat2.format(endDate));
-                getCarDetail(jsonObject.getString("car_id"));
+                lblTitle.setText(carDetail.license_plat + " | " + carDetail.model);
+                CurrencyFormatter currencyFormatter = new CurrencyFormatter(
+                        carDetail.fare * DateUtils.howManyDays(startDate, endDate)
+                );
+                lblPrice.setText(currencyFormatter.format());
+                lblStatus.setText(jsonObject.getString("status"));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -84,34 +92,6 @@ public class OrderCarDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-    }
-
-    private void getCarDetail(String car_id) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(URLConstant.get_car_detail + car_id + ".json", null, new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                new SweetAlertDialog(OrderCarDetail.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText(getResources().getString(R.string.dialog_error_title))
-                        .setContentText("(" + statusCode + ") " + throwable.getMessage())
-                        .show();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                try {
-                    JSONObject jsonObject = new JSONObject(responseString);
-                    lblTitle.setText(
-                            jsonObject.getString("license_plat") + " | " + jsonObject.getString("model")
-                    );
-                    CurrencyFormatter currencyFormatter = new CurrencyFormatter(jsonObject.getDouble("fare"));
-                    lblPrice.setText(currencyFormatter.format());
-                    lblStatus.setText(status);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
         });
     }

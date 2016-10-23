@@ -13,12 +13,20 @@ import android.view.View;
 import com.github.clans.fab.FloatingActionButton;
 import com.gunz.carrental.Adapter.PagerAdapter;
 import com.gunz.carrental.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
     private FloatingActionButton fab;
+    public static ImageLoader imageLoader;
+    public static DisplayImageOptions imageOption;
+    private DisplayImageOptions imageOptionRounded;
+    public static ImageLoaderConfiguration imageConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        imageLoader = ImageLoader.getInstance();
+        imageConfig = new ImageLoaderConfiguration.Builder(this).build();
+        imageOption = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .resetViewBeforeLoading(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .build();
+        imageLoader.init(imageConfig);
 
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), this);
@@ -108,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        imageLoader.clearMemoryCache();
+        imageLoader.clearDiskCache();
     }
 
     @Override

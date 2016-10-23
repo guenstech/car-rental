@@ -45,7 +45,6 @@
             android:gravity="center_vertical"
             android:textColor="@drawable/textview_selector"
             android:textSize="@dimen/tab_title"
-            android:text="Status"
             />
 
     </LinearLayout>
@@ -58,7 +57,6 @@
         android:layout_marginRight="5dp"
         android:textColor="@color/gray_menu_text"
         android:textSize="@dimen/list_status"
-        android:text="Rp. 300000"
         />
 
     <ImageView

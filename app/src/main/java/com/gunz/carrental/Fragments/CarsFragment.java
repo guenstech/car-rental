@@ -10,8 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +18,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.github.clans.fab.FloatingActionButton;
 import com.gunz.carrental.Activities.MainActivity;
 import com.gunz.carrental.Adapter.CarAdapter;
-import com.gunz.carrental.Adapter.OrderAdapter;
 import com.gunz.carrental.Api.URLConstant;
+import com.gunz.carrental.Database.CarDBHelper;
+import com.gunz.carrental.Database.CarRepo;
+import com.gunz.carrental.Database.DBHandler;
 import com.gunz.carrental.Modules.Car;
-import com.gunz.carrental.Modules.Order;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.DividerItemDecoration;
 import com.gunz.carrental.Utils.MySwipeLayout;
@@ -36,15 +33,10 @@ import com.gunz.carrental.Utils.OnOneClickListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.rengwuxian.materialedittext.MaterialEditText;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 
@@ -54,12 +46,10 @@ public class CarsFragment extends Fragment {
     private MySwipeLayout mySwipeLayout;
     private AsyncHttpClient client;
     private RecyclerView rv;
-//    private OrderAdapter adapter;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//    private List<Order> orders;
     private CarAdapter adapter;
     private List<Car> cars;
     private FloatingActionButton fab;
+    private CarRepo repo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +66,7 @@ public class CarsFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
 
+        repo = new CarRepo(getActivity());
         cars = new ArrayList<Car>();
         adapter = new CarAdapter(getActivity(), cars);
         rv.setAdapter(adapter);
@@ -115,10 +106,32 @@ public class CarsFragment extends Fragment {
             }
         });
 
-        mySwipeLayout.setRefreshing(true);
-        getCarList();
+        getCarsFromDatabase();
 
         return rootView;
+    }
+
+    private void getCarsFromDatabase() {
+        List<CarDBHelper> allCars = repo.getAllCar();
+        if (allCars.size() == 0) {
+            getCarList();
+        } else {
+            cars.clear();
+            for (int i = 0; i < allCars.size(); i++) {
+                cars.add(new Car(
+                        allCars.get(i).car_id,
+                        allCars.get(i).brand,
+                        allCars.get(i).model,
+                        allCars.get(i).license_plat,
+                        0,
+                        "",
+                        allCars.get(i).fare,
+                        Status.AVAILABLE.status(),
+                        allCars.get(i).image_url
+                ));
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void getCarList() {
@@ -137,25 +150,23 @@ public class CarsFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
                     JSONArray arrayData = new JSONArray(responseString);
-                    cars.clear();
                     for (int i = 0; i < arrayData.length(); i++) {
                         String imgUrl = "";
                         if (!arrayData.getJSONObject(i).isNull("image_url")) {
                             imgUrl = arrayData.getJSONObject(i).getString("image_url");
                         }
-                        cars.add(new Car(
+                        repo.insertCar(
                                 arrayData.getJSONObject(i).getInt("id"),
                                 arrayData.getJSONObject(i).getString("brand"),
                                 arrayData.getJSONObject(i).getString("model"),
                                 arrayData.getJSONObject(i).getString("license_plat"),
-                                0,
-                                "",
                                 arrayData.getJSONObject(i).getDouble("fare"),
-                                "available",
+                                arrayData.getJSONObject(i).getString("created_at"),
+                                arrayData.getJSONObject(i).getString("updated_at"),
                                 imgUrl
-                        ));
+                        );
                     }
-                    adapter.notifyDataSetChanged();
+                    getCarsFromDatabase();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -201,7 +212,21 @@ public class CarsFragment extends Fragment {
                 v.startAnimation(animation);
             }
         });
+    }
 
+    private enum Status {
+        AVAILABLE("available"),
+        RENTED("rented");
+
+        private String arg;
+
+        Status(String arg) {
+            this.arg = arg;
+        }
+
+        public String status() {
+            return arg;
+        }
     }
 
     @Override
