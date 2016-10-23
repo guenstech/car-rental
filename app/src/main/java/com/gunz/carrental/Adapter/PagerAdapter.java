@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gunz.carrental.Fragments.CarsFragment;
 import com.gunz.carrental.Fragments.OrdersFragment;
+import com.gunz.carrental.Fragments.UsersFragment;
 import com.gunz.carrental.R;
 
 /**
@@ -34,7 +35,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new CarsFragment();
             case 2:
-                return new CarsFragment();
+                return new UsersFragment();
         }
         return null;
     }

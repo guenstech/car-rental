@@ -42,6 +42,7 @@
     <color name="blue_fb">#4a6db4</color>
     <color name="blue">#1565c0</color>
     <color name="blue_dark">#0e47a1</color>
+    <color name="sweetalert_bar">#A5DC86</color>
 
     <color name="pressed">#33000000</color>
     <color name="float_transparent">#00000000</color>

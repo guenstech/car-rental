@@ -37,10 +37,18 @@ public class CarRepo {
         return true;
     }
 
+    public boolean deleteAllCars() {
+        SQLiteDatabase db = dbHandler.getReadableDatabase();
+        String sqlQuery =  "DELETE FROM " + CarDBHelper.TABLE_NAME;
+        db.execSQL(sqlQuery);
+        db.close();
+        return true;
+    }
+
     public List<CarDBHelper> getAllCar(){
         SQLiteDatabase db = dbHandler.getReadableDatabase();
-        String selectQuery =  "SELECT * FROM " + CarDBHelper.TABLE_NAME;
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        String sqlQuery =  "SELECT * FROM " + CarDBHelper.TABLE_NAME;
+        Cursor cursor = db.rawQuery(sqlQuery, null);
         List<CarDBHelper> carList = new ArrayList<CarDBHelper>();
         if (cursor.moveToFirst()) {
             do {
@@ -64,9 +72,9 @@ public class CarRepo {
 
     public CarDBHelper getCarDetail(int id) {
         SQLiteDatabase db = dbHandler.getReadableDatabase();
-        String selectQuery =  "SELECT * FROM " + CarDBHelper.TABLE_NAME + " WHERE " + CarDBHelper.KEY_CAR_ID + " = ?";
+        String sqlQuery =  "SELECT * FROM " + CarDBHelper.TABLE_NAME + " WHERE " + CarDBHelper.KEY_CAR_ID + " = ?";
         CarDBHelper carDetail = new CarDBHelper();
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
+        Cursor cursor = db.rawQuery(sqlQuery, new String[]{String.valueOf(id)});
         if (cursor.moveToFirst()) {
             do {
                 carDetail.id = cursor.getInt(cursor.getColumnIndex(CarDBHelper.KEY_ID));

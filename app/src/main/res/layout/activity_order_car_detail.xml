@@ -6,13 +6,6 @@
     android:orientation="vertical"
     tools:context="com.gunz.carrental.Activities.OrderCarDetail">
 
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:inputType="date"-->
-        <!--android:imeOptions="actionDone"-->
-        <!--/>-->
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"

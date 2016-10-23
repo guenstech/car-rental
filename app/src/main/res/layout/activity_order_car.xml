@@ -1,22 +1,182 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.gunz.carrental.Activities.OrderCar">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/main_color"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:titleTextAppearance="@style/MyApp.ActionBar.TitleTextStyle"
-        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
-        app:theme="@style/AppTheme.Toolbar"
-        app:elevation="0dp"
-        app:layout_scrollFlags="scroll|enterAlways"
-        />
+        android:layout_height="wrap_content"
+        app:elevation="6dp">
 
-</RelativeLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/main_color"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:titleTextAppearance="@style/MyApp.ActionBar.TitleTextStyle"
+            app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
+            app:theme="@style/AppTheme.Toolbar"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:id="@+id/lblTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/list_title"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        />
+
+                    <TextView
+                        android:id="@+id/lblPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/gray_menu_text"
+                        android:textSize="@dimen/tab_title"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/lblStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/gray_menu_text"
+                    android:textSize="@dimen/list_status"
+                    />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+            android:id="@+id/txName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Name"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:textSize="@dimen/list_title"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Start Date"
+            android:imeOptions="actionNext"
+            android:inputType="date"
+            android:textSize="@dimen/list_title"
+            android:enabled="false"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="End Date"
+            android:imeOptions="actionDone"
+            android:inputType="date"
+            android:textSize="@dimen/list_title"
+            android:enabled="false"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextSize="@dimen/list_status"
+            app:met_primaryColor="@android:color/black"
+            app:met_textColor="@color/gray_menu_text"
+            app:met_textColorHint="@android:color/darker_gray"
+            app:met_underlineColor="@color/gray_menu_text"
+            app:met_floatingLabelTextColor="@color/gray_menu_text"
+            app:met_errorColor="@color/red"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/gray_btn_bg_color"
+                >
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/list_title"
+                    android:textAllCaps="true"
+                    android:text="@string/btn_confirm"
+                    />
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

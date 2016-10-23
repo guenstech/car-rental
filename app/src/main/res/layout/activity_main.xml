@@ -66,4 +66,13 @@
         app:fab_colorRipple="@color/blue_btn_bg_color"
         />
 
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:src="@drawable/icon_add"-->
+        <!--app:layout_behavior="com.gunz.carrental.Utils.ScrollAwareFABBehavior"-->
+        <!--app:layout_anchorGravity="bottom|right|end"-->
+        <!--/>-->
+
 </android.support.design.widget.CoordinatorLayout>

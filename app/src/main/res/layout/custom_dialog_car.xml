@@ -29,7 +29,6 @@
                 android:textSize="@dimen/dialog_title_18"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:text="@string/add_new_car_title"
                 />
 
             <ImageView
