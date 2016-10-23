@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,13 +18,15 @@ import com.gunz.carrental.Database.CarDBHelper;
 import com.gunz.carrental.Database.CarRepo;
 import com.gunz.carrental.R;
 import com.gunz.carrental.Utils.CurrencyFormatter;
+import com.gunz.carrental.Utils.OnOneClickListener;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class OrderCar extends AppCompatActivity {
     private Bundle bundle;
     private CarRepo repo;
     private CardView cardView;
     private TextView lblTitle, lblPrice, lblStatus;
-//    private MaterialEditText txName, txStartDate, txEndDate;
+    private MaterialEditText txStartDate, txEndDate;
     private Button btnConfirm;
 
     @Override
@@ -36,6 +41,8 @@ public class OrderCar extends AppCompatActivity {
         lblTitle = (TextView)findViewById(R.id.lblTitle);
         lblPrice = (TextView)findViewById(R.id.lblPrice);
         lblStatus = (TextView)findViewById(R.id.lblStatus);
+        txStartDate = (MaterialEditText)findViewById(R.id.txStartDate);
+        txEndDate = (MaterialEditText)findViewById(R.id.txEndDate);
         btnConfirm = (Button)findViewById(R.id.btnConfirm);
 
         bundle = getIntent().getExtras();
@@ -45,6 +52,16 @@ public class OrderCar extends AppCompatActivity {
         CurrencyFormatter currencyFormatter = new CurrencyFormatter(carDetail.fare);
         lblPrice.setText(currencyFormatter.format());
         lblStatus.setText(Status.AVAILABLE.status());
+
+        txStartDate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    Log.e("","Start date toouched!");
+                }
+                return false;
+            }
+        });
     }
 
     private enum Status {
