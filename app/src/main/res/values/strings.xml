@@ -18,6 +18,8 @@
     <string name="dialog_car_success_add">has been successfully saved</string>
     <string name="dialog_car_success_update">has been successfully updated</string>
     <string name="dialog_car_success_delete">has been successfully deleted</string>
+    <string name="dialog_submit_order_question">Are you sure want to submit order?</string>
+    <string name="dialog_order_success">Your order has been successfully submitted</string>
     <string name="dialog_wait">Please wait...</string>
     <string name="validation_required">This field is required</string>
     <string name="hello_world">Hello world!</string>
@@ -33,6 +35,7 @@
     <string name="add_new_car_model">Car Model</string>
     <string name="add_new_car_license">Car License Plat</string>
     <string name="add_new_car_fare">Fare per Day</string>
+    <string name="date_not_correct">Please select correct date</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_order_car">Order</string>
 

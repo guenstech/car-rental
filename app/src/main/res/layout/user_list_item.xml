@@ -25,7 +25,7 @@
         >
 
         <TextView
-            android:id="@+id/lblTitle"
+            android:id="@+id/lblName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -37,26 +37,18 @@
             />
 
         <TextView
-            android:id="@+id/lblStatus"
+            android:id="@+id/lblAddress"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textColor="@drawable/textview_selector"
+            android:textColor="@color/gray_menu_text"
             android:textSize="@dimen/tab_title"
+            android:singleLine="true"
+            android:ellipsize="end"
             />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/lblFare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="5dp"
-        android:textColor="@color/gray_menu_text"
-        android:textSize="@dimen/list_status"
-        />
 
     <ImageView
         android:id="@+id/imgMore"

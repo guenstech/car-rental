@@ -32,12 +32,25 @@ public class DBHandler extends SQLiteOpenHelper {
                 + CarDBHelper.KEY_CREATED_AT + " TEXT, "
                 + CarDBHelper.KEY_UPDATED_AT + " TEXT, "
                 + CarDBHelper.KEY_IMAGE_URL + " TEXT )";
+
+        String CREATE_TABLE_USER = "CREATE TABLE " + UserDBHelper.TABLE_NAME + "("
+                + UserDBHelper.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + UserDBHelper.KEY_USER_ID + " INTEGER UNIQUE, "
+                + UserDBHelper.KEY_NAME + " TEXT, "
+                + UserDBHelper.KEY_ADDRESS + " TEXT, "
+                + UserDBHelper.KEY_MOBILE + " TEXT, "
+                + UserDBHelper.KEY_CREATED_AT + " TEXT, "
+                + UserDBHelper.KEY_UPDATED_AT + " TEXT, "
+                + UserDBHelper.KEY_URL + " TEXT )";
+
         db.execSQL(CREATE_TABLE_CAR);
+        db.execSQL(CREATE_TABLE_USER);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + CarDBHelper.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + UserDBHelper.TABLE_NAME);
         onCreate(db);
     }
 }
