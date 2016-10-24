@@ -15,6 +15,7 @@
     <string name="dialog_add_car_question">Are you sure want to save a new car?</string>
     <string name="dialog_update_car_question">Are you sure want to update this car?</string>
     <string name="dialog_success_title">Successfully!</string>
+    <string name="dialog_delete_question">Are you sure want to delete it?</string>
     <string name="dialog_car_success_add">has been successfully saved</string>
     <string name="dialog_car_success_update">has been successfully updated</string>
     <string name="dialog_car_success_delete">has been successfully deleted</string>
@@ -30,12 +31,18 @@
     <string name="action_delete">Delete</string>
     <string name="action_detail">Detail</string>
     <string name="add_new_car_title">Add New Car</string>
+    <string name="add_new_user_title">New User</string>
+    <string name="detail_user_title">User Detail</string>
     <string name="update_car_title">Update Car</string>
     <string name="add_new_car_brand">Car Brand</string>
     <string name="add_new_car_model">Car Model</string>
     <string name="add_new_car_license">Car License Plat</string>
     <string name="add_new_car_fare">Fare per Day</string>
     <string name="date_not_correct">Please select correct date</string>
+    <string name="add_user_question">Are you sure want to save a new user?</string>
+    <string name="hint_user_name">Name</string>
+    <string name="hint_user_address">Address</string>
+    <string name="hint_user_mobile">Mobile Phone</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_order_car">Order</string>
 

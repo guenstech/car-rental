@@ -60,7 +60,6 @@ public class OrderCar extends AppCompatActivity {
     private AsyncHttpClient client;
     private DatePickerDialog datePickerDialog;
     private String[] item = new String[]{};
-    private int[] mUserId = new int[]{};
     private ArrayAdapter<String> userAutocompleteAdapter;
     private TextView lblTitle, lblPrice, lblStatus;
     private MaterialAutoCompleteTextView txName;
@@ -113,15 +112,8 @@ public class OrderCar extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        txName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserRepo userRepo = new UserRepo(OrderCar.this);
-                userSelectedID = userRepo.getUserIDbyName(item[position].toString());
+                userSelectedID = userRepo.getUserIDbyName(s.toString());
             }
         });
 

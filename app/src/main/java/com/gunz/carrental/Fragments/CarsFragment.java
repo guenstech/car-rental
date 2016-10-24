@@ -100,7 +100,9 @@ public class CarsFragment extends Fragment {
         fab.setOnClickListener(new OnOneClickListener() {
             @Override
             public void onOneClick(View v) {
-                addCar(true, -1);
+                if (isAdded() && isVisible() && getUserVisibleHint()) {
+                    addCar(true, -1);
+                }
             }
         });
 

@@ -93,7 +93,20 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder> {
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(callbackDelete);
                                 break;
                             case R.id.action_car_delete:
-                                deleteCar(cars.get(position).id, cars.get(position).brand, cars.get(position).type);
+                                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                                        .setTitleText(context.getResources().getString(R.string.dialog_confirmation))
+                                        .setContentText(context.getResources().getString(R.string.dialog_delete_question))
+                                        .setCancelText(context.getResources().getString(R.string.btn_cancel))
+                                        .setConfirmText(context.getResources().getString(R.string.action_delete))
+                                        .showCancelButton(true)
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                deleteCar(cars.get(position).id, cars.get(position).brand, cars.get(position).type);
+                                                sweetAlertDialog.dismiss();
+                                            }
+                                        })
+                                        .show();
                                 break;
                             default:
                                 break;

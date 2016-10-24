@@ -6,4 +6,5 @@ public class URLConstant {
     public static final String get_car_list = url_api + "cars.json";
     public static final String update_delete_car = url_api + "cars/";
     public static final String get_user_list = url_api + "users.json";
+    public static final String update_delete_user = url_api + "users/";
 }
